@@ -1,0 +1,36 @@
+<div class="app">
+<h2>Search by city</h2>
+<br>
+<p *ngIf="error" class="error">Please enter city name correctly</p>
+City Name: <input type="text" (keyup)="onNameKeyUp($event)" autofocus placeholder="Enter City Name" required>
+<button class="btn" (click)="getCityHotels()">Get Hotel</button>
+</div>
+<br>
+<br >
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" >
+
+ <li *ngFor="let hotel of cityHotels"> 
+  <agm-marker  [title]="hotel.name" [latitude]="hotel.lat"
+      [longitude]="hotel.lng" 
+      (markerClick)="hotelWeather(hotel.weather)">
+        <agm-info-window [disableAutoPan]="true">
+                  <div class="root">
+                      <div class="rootWeather">
+                        <div><h6>Current</h6></div>
+                        <div class="temp">
+                          <div>
+                              <img src={{imgSrc}} 
+                              height="30px" width="30px" alt={{imgAlt}}>
+                          </div> 
+                          <div class="templeft"> {{hotel.temp}} </div>
+                        </div>
+                        <div class="weather"> {{weather}} </div>     
+                        <div > <p class="tempRange"> Max: {{hotel.temp_max}}</p></div>
+                        <div>  <p class="tempRange">Min: {{hotel.temp_min}} </p> </div>
+                      </div> 
+                  </div>            
+          </agm-info-window>
+       </agm-marker>
+  </li>
+
+</agm-map>
